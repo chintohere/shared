@@ -16,21 +16,30 @@ Sub Add(Ticket As IPCTicket)
 End Sub
 
 
-
 'Find if exists
-Function Find(ChangeID As String) As IPCTicket
+Function Find(ChangeID As String, Optional Item As String = Empty) As IPCTicket
+    
+    If Item = Empty Then
+    Else
+        ChangeID = ChangeID & vbNewLine & Item
+    End If
+    
     Dim Ticket As IPCTicket
     
     For Each Ticket In Tickets
         If Ticket.ChangeID = ChangeID Then
-            Debug.Print "Found Ticket Matching: " & ChangeID
+            'Debug.Print "Found Ticket Matching: " & ChangeID
             Set Find = Ticket
             Exit Function
         End If
     Next
     
-    Debug.Print "Not Found Ticket Matching: " & ChangeID
+    'Debug.Print "Not Found Ticket Matching: " & ChangeID
     Set Find = Nothing
+End Function
+
+Function Size() As Integer
+    Size = Tickets.Count
 End Function
 
 
