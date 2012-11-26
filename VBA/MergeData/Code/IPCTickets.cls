@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 Option Explicit
 Private Tickets As New Collection
 
-Sub Add(Ticket As IPCTicket)
+Sub Add(ByVal Ticket As IPCTicket)
     Tickets.Add Item:=Ticket, Key:=Ticket.ChangeID
     Debug.Print "Adding Ticket: " & Ticket.ChangeID
 End Sub
@@ -40,6 +40,10 @@ End Function
 
 Function Size() As Integer
     Size = Tickets.Count
+End Function
+
+Function All() As Collection
+ Set All = Tickets
 End Function
 
 

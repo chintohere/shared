@@ -19,24 +19,37 @@ Public Impact As String
 Public RequesterName As String
 Const NewLine As String = "n"
 
-Public Sub Load(ByRef Row As Range)
+Public Sub ReadFromRow(ByRef Row As Range)
     Dim Item As String
-    Item = Rows.Cells(1, 2)
-    
+    Item = Row.Cells(1, 2)
+       
     Me.ChangeID = Row.Cells(1, 1) & vbNewLine & Item
+    Me.ChangeType = Row.Cells(1, 20)
     Me.StartTime = Row.Cells(1, 3)
     Me.EndTime = Row.Cells(1, 4)
     Me.Summary = Row.Cells(1, 5)
-    Me.ChangeType = Row.Cells(1, 20)
-    Me.RequesterName = Row.Cells(1, 18)
     Me.Impact = Item & " - " & Row.Cells(1, 8) & " - " & Me.StartTime & " to " & Me.EndTime
     Me.Impact = Me.Impact + vbNewLine + Row.Cells(1, 11)
+    Me.RequesterName = Row.Cells(1, 18)
+End Sub
+
+Public Sub WriteToRow(ByRef Row As Range)
+    
+    Row.Cells(1, 1) = Me.ChangeID
+    Row.Cells(1, 2) = Me.ChangeType
+    Row.Cells(1, 3) = Me.StartTime
+    Row.Cells(1, 4) = Me.EndTime
+    Row.Cells(1, 5) = Me.Summary
+    Row.Cells(1, 6) = Me.Impact
+    Row.Cells(1, 7) = Me.RequesterName
     
 End Sub
 
 'This should do the concatenation bit
 Public Sub Merge(ByRef Ticket As IPCTicket)
-    Me.Impact = Me.Impact & vbNewLine & Ticket.Impact
+    If Trim(Ticket.Impact) <> Empty Then
+        Me.Impact = Me.Impact & vbNewLine & Ticket.Impact
+    End If
 End Sub
 
 Public Sub PrintTicket()

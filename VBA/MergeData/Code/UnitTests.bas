@@ -3,6 +3,7 @@ Option Explicit
 
 Public Sub RunAll()
     Call TestAdd
+    Call TestMerge
     Call TestFind
     Call TestFindWithItemName
 End Sub
@@ -23,6 +24,54 @@ Public Sub TestAdd()
     
     Debug.Print Tickets.Size()
     Debug.Assert Tickets.Size() = 1
+    
+End Sub
+
+Public Sub TestAddMultiple()
+       
+    Dim Ticket1 As New IPCTicket
+    Dim Ticket2 As New IPCTicket
+    Ticket1.ChangeID = "Change1"
+    Ticket2.ChangeID = "Change2"
+    Ticket1.Impact = "Impact 1"
+    Ticket2.Impact = "Impact 2"
+    
+    Debug.Print "Adding Ticket1"
+    Dim Tickets As New IPCTickets
+    
+    Debug.Print Tickets.Size()
+    Debug.Assert Tickets.Size() = 0
+    
+    Tickets.Add Ticket1
+    
+    
+    Debug.Print Tickets.Size()
+    Debug.Assert Tickets.Size() = 1
+    
+    Tickets.Add Ticket2
+    
+    Debug.Print Tickets.Size()
+    Debug.Assert Tickets.Size() = 2
+    
+End Sub
+
+Public Sub TestMerge()
+       
+    Debug.Print "Creating Ticket1"
+    Dim Ticket1 As New IPCTicket
+    Dim Ticket2 As New IPCTicket
+    Ticket1.ChangeID = "Change1"
+    Ticket2.ChangeID = "Change1"
+    Ticket1.Impact = "Impact 1"
+    Ticket2.Impact = "Impact 2"
+    
+    Debug.Print "Adding Ticket1"
+    Dim Tickets As New IPCTickets
+    
+    Call Ticket1.Merge(Ticket2)
+    
+    Debug.Assert Ticket1.Impact = "Impact 1" & vbNewLine & "Impact 2"
+    
     
 End Sub
 Public Sub TestFindWithItemName()
