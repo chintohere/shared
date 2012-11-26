@@ -65,6 +65,16 @@ End Sub
 
 Sub WriteToSheet(Output As Worksheet, Tickets As IPCTickets, Optional Index As Integer = 1)
 
+    Call Output.Cells.ClearContents
+    Output.Cells(1, 1) = "Cache Id"
+    Output.Cells(1, 2) = "Type"
+    Output.Cells(1, 3) = "Start Time"
+    Output.Cells(1, 4) = "End Time"
+    Output.Cells(1, 5) = "Summary"
+    Output.Cells(1, 6) = "Impact"
+    Output.Cells(1, 6) = "Requestor Name"
+    
+    
     Dim Ticket As IPCTicket
 
     For Each Ticket In Tickets.All
